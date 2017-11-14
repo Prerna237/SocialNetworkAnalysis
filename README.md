@@ -1,7 +1,7 @@
 # Social Network
 ## Central Nodes
 * Data: Directed Graph
-* Measures of Centrality : Betweeness and Closeness are more relevant
+* Measures of Centrality : Eigenvector, Betweeness and Closeness are more relevant
 * Use Code: https://github.com/JohnCoogan/twitter-graph-visualization
 ## Link Prediction
 * Consider: http://be.amazd.com/link-prediction/
