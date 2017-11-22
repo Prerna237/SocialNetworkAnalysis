@@ -7,6 +7,7 @@
 ## Link Prediction
 * Consider: http://be.amazd.com/link-prediction/
 * Data: Directed Graph with nodes hashtags used
+* Validation Method: http://wiki.fast.ai/index.php/Log_Loss
 ### Deliverables
 * Readme: How to use | Motivation | What exactly is done | etc.
 * Video: 6 mins
