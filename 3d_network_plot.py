@@ -1,20 +1,47 @@
 
 # coding: utf-8
 
-# In[ ]:
+# In[7]:
 
-# Add code to visualize the centrality of the graph. Basically this section is to get an idea about the structure of the graph
+import igraph as ig
+import json
+import urllib2
+
+data = []
+req = urllib2.Request("https://raw.githubusercontent.com/plotly/datasets/master/miserables.json")
+opener = urllib2.build_opener()
+f = opener.open(req)
+data = json.loads(f.read())
 
 
-# In[2]:
+# In[16]:
 
-from igraph import * 
-g=Graph()
+L=len(data['links'])
+Edges=[(data['links'][k]['source'], data['links'][k]['target']) for k in range(L)]
+
+Gp=ig.Graph(Edges, directed=False)
+
+
+# In[19]:
+
+print((Edges[0]))
 
 
 # In[3]:
 
+labels=[]
+group=[]
 
+
+for node in data['nodes']:
+    labels.append(node['name'])
+    group.append(node['group'])
+
+
+# In[25]:
+
+from igraph import * 
+G=Graph()
 def addVertex(g,name_str):
     try:
         if(name_str not in g.vs['name']):
@@ -38,9 +65,6 @@ def retrieve_edge_name_tuple(g,t):
     return a
 
 
-# In[4]:
-
-
 def load_dataset(fileName,g):
     fileNums=[0]
     for i,eachNum in enumerate(fileNums):
@@ -58,83 +82,6 @@ def load_dataset(fileName,g):
             line=f.readline()
     g.simplify()    
     return
-
-
-# In[5]:
-
-load_dataset('abd',g)
-print(len(g.vs))
-
-
-# In[7]:
-
-print(len(g.vs))
-
-
-# In[20]:
-
-def calculate_eigen(g):
-    eigen=g.evcent(directed=False)
-    for i in range(1,6):
-        maxVal=max(eigen)
-        print(i,'==node',g.vs[eigen.index(maxVal)]['name'],' with score of ',maxVal)
-        eigen.remove(maxVal)
-    eigen=g.evcent(directed=False)
-    return eigen
-
-
-# In[21]:
-
-def calculate_closeness(g):
-    close=g.closeness(g.vs)
-    for i in range(1,6):
-        maxVal=max(close)
-        print(i,'==node',g.vs[close.index(maxVal)]['name'],' with score of ',maxVal)
-        close.remove(maxVal)
-    close=g.closeness(g.vs)
-    return close
-
-
-# In[22]:
-
-def calculate_between(g):
-    between=g.betweenness(g.vs)
-    for i in range(1,6):
-        maxVal=max(between)
-        print(i,'==node',g.vs[between.index(maxVal)]['name'],' with score of ',maxVal)
-        between.remove(maxVal)
-    between=g.betweenness(g.vs)
-    return between
-
-
-# In[23]:
-
-print('Eigen Vector')
-global eigen
-eigen=calculate_eigen(g)
-
-global close
-global between
-print('Closeness')
-close=calculate_closeness(g)
-print('Betweenness')
-between=calculate_between(g)
-
-
-# In[24]:
-
-print(close)
-
-
-# In[ ]:
-
-
-
-
-# In[25]:
-
-from igraph import * 
-G=Graph()
 
 load_dataset('abd',G)
 
@@ -168,7 +115,17 @@ import plotly
 plotly.tools.set_credentials_file(username='prerna_237', api_key='DXXXKP8XPO3FBUWsH4NY')
 
 
-# In[26]:
+# In[63]:
+
+
+
+
+# In[65]:
+
+print(len(l))
+
+
+# In[71]:
 
 import plotly.plotly as py
 from plotly.graph_objs import *
@@ -188,7 +145,7 @@ trace2=Scatter3d(x=Xn,
                mode='markers',
                name='actors',
                marker=Marker(symbol='dot',
-                             color=eigen,
+                             color=l,
                              size=6,colorbar=ColorBar(
                 title='Colorbar'
             ),
@@ -241,29 +198,4 @@ data=Data([trace1, trace2])
 fig=Figure(data=data, layout=layout)
 
 py.iplot(fig)
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
 
