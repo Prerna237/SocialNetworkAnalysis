@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[24]:
+# In[2]:
 
 #Reading input feature values using numpy
 import numpy as np
@@ -10,7 +10,7 @@ global num_of_feat
 num_of_feat=347
 
 
-# In[32]:
+# In[3]:
 
 def load_dataset(fileName,g):
     fileNums=[0]
@@ -88,13 +88,14 @@ def retrieve_edge_name_tuple(g,t):
 
 
 
-# In[48]:
+# In[4]:
 
+# Load Feature vectors
 li={0}
 node_feat=load_shape_input(li)
 
 
-# In[34]:
+# In[5]:
 
 g=Graph()
 load_dataset('Datasets/Self_Datasets/sample_train.edges',g)
@@ -104,7 +105,7 @@ not_g=Graph()
 load_dataset('Datasets/Self_Datasets/negative_train.edges',not_g)
 
 
-# In[49]:
+# In[6]:
 
 print(type(node_feat))
 for eachKey in node_feat.values():
@@ -112,20 +113,20 @@ for eachKey in node_feat.values():
     print(type(eachKey))
 
 
-# In[50]:
+# In[7]:
 
-print(node_feat[np.float64(0)])
-
-
-# In[51]:
-
-print('positive edges',len(g.es))
-print('negative edges',len(not_g.es))
-t=retrieve_edge_name_tuple(g,(0,1))
-node_feat[np.float64(t[0])]
+# print(node_feat[np.float64(0)])
 
 
-# In[52]:
+# In[8]:
+
+# print('positive edges',len(g.es))
+# print('negative edges',len(not_g.es))
+# t=retrieve_edge_name_tuple(g,(0,1))
+# node_feat[np.float64(t[0])]
+
+
+# In[9]:
 
 def make_class_arrays(g,datalabel):
     output_list=list()
@@ -138,7 +139,7 @@ def make_class_arrays(g,datalabel):
     return np.asarray(output_list)
 
 
-# In[53]:
+# In[10]:
 
 valid_g=Graph()
 load_dataset('Datasets/Self_Datasets/sample_valid.edges',valid_g)
@@ -149,30 +150,30 @@ valid_not_g=Graph()
 load_dataset('Datasets/Self_Datasets/negative_valid.edges',valid_not_g)
 
 
-# In[45]:
+# In[11]:
 
-print(len(node_feat[np.float64(345)]))
+# print(len(node_feat[np.float64(345)]))
 
 
-# In[67]:
+# In[12]:
 
 x_positive=make_class_arrays(g,1)
 x_negative=make_class_arrays(not_g,1)
 
 
-# In[69]:
+# In[13]:
 
 print(x_positive.shape)
 print(x_negative.shape)
 
 
-# In[71]:
+# In[14]:
 
 valid_x_positive=make_class_arrays(valid_g,1)
 valid_x_negative=make_class_arrays(valid_not_g,1)
 
 
-# In[75]:
+# In[15]:
 
 print(valid_x_positive.shape)
 print(valid_x_negative.shape)
@@ -183,25 +184,25 @@ print(valid_x_negative.shape)
 
 
 
-# In[78]:
+# In[16]:
 
 y_positive=np.full(shape=(x_positive.shape[0],1),fill_value=1.0)
 y_negative=np.full(shape=(x_negative.shape[0],1),fill_value=0.0)
 
 
-# In[80]:
+# In[17]:
 
 print(y_positive.shape)
 print(y_negative.shape)
 
 
-# In[82]:
+# In[18]:
 
 valid_y_positive=np.full(shape=(valid_x_positive.shape[0],1),fill_value=1.0)
 valid_y_negative=np.full(shape=(valid_x_negative.shape[0],1),fill_value=0.0)
 
 
-# In[92]:
+# In[19]:
 
 print(valid_x_positive.shape)
 print(valid_x_negative.shape)
@@ -209,12 +210,12 @@ print(valid_y_positive.shape)
 print(valid_y_negative.shape)
 
 
-# In[65]:
+# In[20]:
 
 print(valid_y_positive.shape)
 
 
-# In[94]:
+# In[21]:
 
 train_X=np.append(x_positive,x_negative,axis=0)
 train_Y=np.append(y_positive,y_negative,axis=0)
@@ -223,7 +224,7 @@ valid_X=np.append(valid_x_positive,valid_x_negative,axis=0)
 valid_Y=np.append(valid_y_positive,valid_y_negative,axis=0)
 
 
-# In[95]:
+# In[22]:
 
 print(type(x_positive))
 print(valid_X.shape)
@@ -235,7 +236,7 @@ print(train_X.shape)
 print(1592+1748)
 
 
-# In[96]:
+# In[23]:
 
 from sklearn import linear_model
 reg = linear_model.Ridge (alpha = .5)
@@ -262,8 +263,27 @@ len(reg.predict(valid_X))
 np.mean((reg.predict(valid_X)-valid_Y)**2)
 
 
-# In[101]:
+# In[24]:
 
 from sklearn.metrics import log_loss
 log_loss(valid_Y,reg.predict(valid_X))
+# print(0.01)
+
+
+# In[29]:
+
+from sklearn import svm
+clf_svm = svm.SVC()
+clf_svm.fit(X=train_X[:-1],y=train_Y[:-1])  
+
+
+# In[31]:
+
+from sklearn.metrics import log_loss
+log_loss(valid_Y,clf_svm.predict(valid_X))
+
+
+# In[ ]:
+
+from sklearn.neighbors import NearestNeighbors
 
