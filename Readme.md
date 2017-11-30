@@ -18,9 +18,6 @@
 
 > Given an instance of set of nodes (users) in a social network graph, the aim is to find the influencing (important) users and to predict the likelihood of a future association (edge) between two nodes, knowing that there is no association between the nodes in the current state of the graph.
 
-![link](D:\User\Desktop\link.jpg)
-
-
 
 ## Motivation
 The edges described in the problem statement could be of any form: friendship, collaboration, following or mutual interests. Here, we specifically study and build our model over Facebook's social network, with the following areas of motivation:
@@ -52,9 +49,6 @@ Discussed below are the four major Knowledge Engineering Tasks:
 
 *  Following figure represents an example of the attributes and the procedure of feature array formation.
 
-   ​
-
-   ![Tree Structure](D:\User\Pictures\Capture.png)
 ##### Domain Knowledge: 
 
 Following insights are meaningful while building our model for Link Prediction:
@@ -73,9 +67,6 @@ Following insights are meaningful while building our model for Link Prediction:
 
 * Machine Learning models like Support Vector Machine could classify the set of nodes into two: (1) Connection, (2) No connection, Neural Networks and regression techniques can be used for the same.
 
-  ![svm](D:\User\Pictures\Capture1.png)
-
-  ​
 
 
 
